@@ -25,90 +25,96 @@ function each(elements, cb) {
 each(items,callback)
 
 
-let mapArr=[]
-function mapCB(ele){
-  mapArr.push(ele*2)
-  console.log(mapArr)
-}
+
 function map(elements, cb) {
   // Do NOT use .map, to complete this function.
   // How map works: Map calls a provided callback function once for each element in an array, in order, and functionructs a new array from the res .
   // Produces a new array of values by mapping each value in list through a transformation function (iteratee).
   // Return the new array.
+  let mapArr=[]
   for(let i=0;i<elements.length;i++){
-    cb(elements[i])
+    mapArr.push(cb(elements[i]))
   }
+  return mapArr
 }
-map(items,mapCB)
+let array=map(items,(item)=>{
+    return item*2
+})
+console.log(array)
 
 
-function reduceCB(start,value){
- return start+value
 
-}
 function reduce(elements, cb, startingValue) {
   // Do NOT use .reduce to complete this function.
   // How reduce works: A reduce function combines all elements into a single value going from left to right.
   // Elements will be passed one by one into `cb` along with the `startingValue`.
   // `startingValue` should be the first argument passed to `cb` and the array element should be the second argument.
   // `startingValue` is the starting value.  If `startingValue` is undefined then make `elements[0]` the initial value.
-  for(let i=0;i<elements.length;i++){
-    if(startingValue==='undefined'){
-      
-      startingValue=0
+  if (elements.length<1){
+    console.log("array is empty")
+  }
+  if(!startingValue){
+    if(typeof(elements[0])==="string"){
+        startingValue=''
     }
-   
+    else if(typeof(elements[0])==="number"){
+        startingValue=0
+    }
+  }
+  for(let i=0;i<elements.length;i++){
     startingValue=cb(startingValue,elements[i])
-    
   }
-  console.log(startingValue)
+  return (startingValue)
 
 }
-reduce(items,reduceCB,0)
+let totalsum=reduce(items,(acc,ele)=>{
+    return acc+ele
+},0)
+console.log(totalsum)
 
 
-function findCB(ele){
-  if(!ele){
-    console.log("undefined")
-    return "undefined"
-  }
-  else{
-    console.log(ele)
-    return ele
-  }
-}
+
+
 function find(elements, cb) {
   // Do NOT use .includes, to complete this function.
   // Look through each value in `elements` and pass each element to `cb`.
   // If `cb` returns `true` then return that element.
   // Return `undefined` if no elements pass the truth test.
   for(let i=0;i<elements.length;i++){
-    cb(elements[i])
+    if(cb(elements[i])){
+        return elements[i]
+    }
+
   }
+  return ("undefined")
 }
-find(items,findCB)
+let target=find(items,(item)=>{
+    if(item>2){
+        return true
+    }
+})
+console.log(target)
 
 
 
-let filteredArr=[]
-function filterCB(ele){
-  if(!ele){
-    console.log([])
-  }
-  else{
-    filteredArr.push(ele)
-    console.log(filteredArr)
-  }
-}
+
 function filter(elements, cb) {
   // Do NOT use .filter, to complete this function.
   // Similar to `find` but you will return an array of all elements that passed the truth test
   // Return an empty array if no elements pass the truth test
+  let filteredArr=[]
   for (let i=0;i<elements.length;i++){
-    cb(elements[i])
+    if(!!cb(elements[i],i)){
+        filteredArr.push(elements[i])
+    }
   }
+  return filteredArr
 }
-filter(items,filterCB)
+let filterArr=filter(items,(item,index)=>{
+    return item!==3
+})
+console.log(filterArr)
+
 
 
 
@@ -129,4 +135,3 @@ function flatten(elements) {
   });
   return flattenArr
 }
-

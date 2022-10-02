@@ -54,14 +54,7 @@ function reduce(elements, cb, startingValue) {
     console.log("array is empty")
     return;
   }
-  if(!startingValue){
-    if(typeof(elements[0])==="string"){
-        startingValue=''
-    }
-    else if(typeof(elements[0])==="number"){
-        startingValue=0
-    }
-  }
+  
   for(let i=0;i<elements.length;i++){
     startingValue=cb(startingValue,elements[i])
   }

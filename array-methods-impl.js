@@ -52,6 +52,7 @@ function reduce(elements, cb, startingValue) {
   // `startingValue` is the starting value.  If `startingValue` is undefined then make `elements[0]` the initial value.
   if (elements.length<1){
     console.log("array is empty")
+    return;
   }
   if(!startingValue){
     if(typeof(elements[0])==="string"){
@@ -104,12 +105,13 @@ function filter(elements, cb) {
   // Return an empty array if no elements pass the truth test
   let filteredArr=[]
   for (let i=0;i<elements.length;i++){
-    if(!!cb(elements[i],i)){
+    if(cb(elements[i],i)){
         filteredArr.push(elements[i])
     }
   }
   return filteredArr
 }
+
 let filterArr=filter(items,(item,index)=>{
     return item!==3
 })
